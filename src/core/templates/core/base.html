@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Inventory Flow{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'core/js/tailwind.config.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-black-pearl text-slate-200 font-sans">
+
+    <div class="flex flex-col min-h-screen">
+
+        <!-- Header -->
+         {% include 'core/components/header.html' %}
+
+        <!-- Sidebar + Content -->
+        <div class="flex flex-1">
+
+            <!-- Sidebar -->
+            {% include 'core/components/sidebar.html' %}
+
+            <div class="flex flex-col flex-1">
+
+                <!-- Content -->
+                <main class="flex-1 p-6">{% block content %}{% endblock %}</main>
+
+                <!-- Footer -->
+                <footer class="bg-black-pearl">
+                    <div class="max-w-7xl mx-auto px-4 py-3 text-center text-sm text-slate-500">
+                        © 2025 Inventory Flow. Todos os direitos reservados.
+                    </div>
+                </footer>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
