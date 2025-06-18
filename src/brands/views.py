@@ -101,3 +101,17 @@ class BrandDeleteView(DeleteView):
     template_name = 'brands/partials/_brand_form_delete.html'
     success_url = reverse_lazy('brand-list')
     context_object_name = 'brand'
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+
+        if self.request.headers.get('HX-Request'):
+            brands = models.Brand.objects.all()
+            context = {'brands': brands}
+            return render(request, 'brands/partials/_brand_table.html', context)
+
+        return response
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return render(request, self.template_name, self.get_context_data())
