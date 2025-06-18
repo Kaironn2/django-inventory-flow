@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+
+    <div class="space-y-6">
+        
+        <!-- Back Button -->
+        <div>
+            <a href="{% url 'brand-list' %}" 
+            class="flex items-center gap-2 text-slate-100 hover:text-white">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                <span>Voltar</span>
+            </a>
+        </div>
+
+        <!-- Detail Card -->
+        <div class="bg-slate-800 border border-slate-700 rounded p-6 text-slate-100 shadow-md">
+
+            <!-- brand name -->
+            <h2 class="text-2xl font-bold mb-4">
+                {{ brand.name }}
+            </h2>
+
+            <!-- brand id -->
+            <div class="space-y-2">
+                <div>
+                    <span class="text-slate-400 font-semibold">ID:</span>
+                    <span class="font-medium">{{ brand.id }}</span>
+                </div>
+            </div>
+
+            <!-- brand description -->
+            <div>
+                <span class="text-slate-400 font-semibold">Descrição:</span>
+                <span class="font-medium">
+                    {{ brand.description|default:"Não há descrição cadastrada." }}
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

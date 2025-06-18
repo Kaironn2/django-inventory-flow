@@ -1,18 +1,53 @@
-<table class="w-full text-left border-collapse">
-    <thead class="bg-slate-800 text-slate-200 border border-slate-700">
-        <tr>
-            <th class="px-4 py-2 border border-slate-700">ID</th>
-            <th class="px-4 py-2 border border-slate-700">Nome</th>
-            <th class="px-4 py-2 border border-slate-700">Descrição</th>
-        </tr>
-    </thead>
-    <tbody class="divide-y divide-slate-700">
-        {% for brand in brands %}
-        <tr class="hover:bg-slate-700">
-            <td class="px-4 py-2 border border-slate-700">{{ brand.id }}</td>
-            <td class="px-4 py-2 border border-slate-700">{{ brand.name }}</td>
-            <td class="px-4 py-2 border border-slate-700">{{ brand.description|default:"Não há descrição" }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% load static %}
+{% if brands %}
+    <table class="w-full text-left border-collapse">
+        <thead class="bg-slate-800 text-slate-200 border border-slate-700">
+            <tr>
+                <th class="px-4 py-2 border border-slate-700">ID</th>
+                <th class="px-4 py-2 border border-slate-700">Nome</th>
+                <th class="px-4 py-2 border border-slate-700">Descrição</th>
+                <th class="px-4 py-2 border border-slate-700">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-700">
+            {% for brand in brands %}
+            <tr class="hover:bg-slate-700 cursor-pointer" data-href="{% url 'brand-detail' brand.id %}">
+                <td class="px-4 py-2 border border-slate-700">{{ brand.id }}</td>
+                <td class="px-4 py-2 border border-slate-700">{{ brand.name }}</td>
+                <td class="px-4 py-2 border border-slate-700">{{ brand.description|default:"Não há descrição" }}</td>
+                <td class="px-4 py-2 border border-slate-700">
+
+                    <!-- update button -->
+                    <button 
+                        hx-get="{% url 'brand-update' brand.id %}"
+                        hx-target="#modal-content"
+                        hx-swap="innerHTML"
+                        onclick="event.stopPropagation(); openModal()"
+                        class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded"
+                    >
+                        <i data-lucide="pencil" class="w-5 h-5"></i>
+                    </button>
+                    <!-- delete button -->
+                     
+                    <button 
+                        hx-get="{% url 'brand-delete' brand.id %}"
+                        hx-target="#modal-content"
+                        hx-swap="innerHTML"
+                        onclick="event.stopPropagation(); openModal()"
+                        class="bg-red-600 hover:bg-red-700 text-white p-2 rounded"
+                    >
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="text-slate-400">Nenhuma marca encontrada.</p>
+{% endif %}
+
+{% block extrajs %}
+    <script src="{% static 'brands/js/table-row-navigation.js' %}"></script>
+{% endblock %}

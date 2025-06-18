@@ -1,9 +1,8 @@
 <form 
     method="post"
-    hx-post="{% url 'brand-create' %}"
+    hx-post="{% url 'brand-update' brand.id %}"
     hx-target="#brand-table"
-    hx-swap="outerHTML"
-    onsubmit="closeModal()"
+    hx-swap="innerHTML"
 >
     {% csrf_token %}
     <div class="space-y-4">

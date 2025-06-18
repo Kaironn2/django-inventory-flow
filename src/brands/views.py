@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 
 from . import forms, models
 
@@ -27,8 +33,8 @@ class BrandListView(ListView):
 
 class BrandCreateView(CreateView):
     model = models.Brand
-    template_name = 'brands/partials/_brand_form.html'
-    form_class = forms.BrandCreateForm
+    template_name = 'brands/partials/_brand_form_create.html'
+    form_class = forms.BrandForm
     success_url = reverse_lazy('brand-list')
 
     def get(self, request, *args, **kwargs):
@@ -46,7 +52,52 @@ class BrandCreateView(CreateView):
         if self.request.headers.get("HX-Request"):
             return render(
                 self.request,
-                'brands/partials/_brand_form.html',
+                'brands/partials/_brand_form_create.html',
                 {'form': form}
             )
         return super().form_invalid(form)
+
+
+class BrandDetailView(DetailView):
+    model = models.Brand
+    template_name = 'brands/brand-detail.html'
+    context_object_name = 'brand'
+
+
+class BrandUpdateView(UpdateView):
+    model = models.Brand
+    template_name = 'brands/partials/_brand_form_update.html'
+    form_class = forms.BrandForm
+    success_url = reverse_lazy('brand-list')
+    context_object_name = 'brand'
+
+    def get(self, request, *args, **kwargs):
+        form = self.get_form()
+        return render(
+            request,
+            self.template_name,
+            {'form': form, 'brand': self.get_object()}
+        )
+
+    def form_valid(self, form):
+        self.object = form.save()
+        brands = models.Brand.objects.all()
+        context = {'brands': brands}
+
+        return render(self.request, 'brands/partials/_brand_table.html', context)
+
+    def form_invalid(self, form):
+        if self.request.headers.get("HX-Request"):
+            return render(
+                self.request,
+                self.template_name,
+                {'form': form, 'brand': self.get_object()}
+            )
+        return super().form_invalid(form)
+
+
+class BrandDeleteView(DeleteView):
+    model = models.Brand
+    template_name = 'brands/partials/_brand_form_delete.html'
+    success_url = reverse_lazy('brand-list')
+    context_object_name = 'brand'

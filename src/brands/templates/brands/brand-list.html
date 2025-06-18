@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<div>
+<div class="flex justify-between pt-9">
 
     <!-- Search field -->
     <input
@@ -20,13 +20,15 @@
     />
 
     <!-- Save button -->
-    <button 
-        class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded"
+    <button
+        id="save-brand"
+        class="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 mb-4 rounded"
         hx-get="{% url 'brand-create' %}"
         hx-target="#modal-content"
         hx-swap="innerHTML"
         onclick="openModal()"
     >
+        <i data-lucide="plus" class="w-5 h-5"></i>
         Nova Marca
     </button>
 

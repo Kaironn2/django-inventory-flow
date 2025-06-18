@@ -4,6 +4,7 @@ function openModal() {
 
 function closeModal() {
     document.getElementById('modal').classList.add('hidden');
+    document.getElementById('modal-content').innerHTML = '';
 }
 
 document.getElementById('modal').addEventListener('click', function (event) {
@@ -14,6 +15,13 @@ document.getElementById('modal').addEventListener('click', function (event) {
 
 document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
+        closeModal();
+    }
+});
+
+document.body.addEventListener('htmx:afterRequest', function (e) {
+    const targetId = e.detail.target.id;
+    if (targetId === "brand-table") {
         closeModal();
     }
 });
