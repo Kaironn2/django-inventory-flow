@@ -1,22 +1,51 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title %}Marcas{% endblock %}
 
 
 {% block content %}
-    
-<input
-    type="text"
-    name="name"
-    placeholder="Buscar marca..."
-    class="mb-4 p-2 rounded bg-slate-800 text-slate-100 border border-slate-600 w-1/3"
-    hx-get="{% url 'brand-list' %}"
-    hx-target="#brand-table"
-    hx-trigger="keyup changed delay:200ms"
-/>
 
+<div>
+
+    <!-- Search field -->
+    <input
+        type="text"
+        name="brand-name"
+        placeholder="Buscar marca..."
+        class="mb-4 p-2 rounded bg-slate-800 text-slate-100 border border-slate-600 w-1/3"
+        hx-get="{% url 'brand-list' %}"
+        hx-target="#brand-table"
+        hx-trigger="keyup changed delay:200ms"
+    />
+
+    <!-- Save button -->
+    <button 
+        class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded"
+        hx-get="{% url 'brand-create' %}"
+        hx-target="#modal-content"
+        hx-swap="innerHTML"
+        onclick="openModal()"
+    >
+        Nova Marca
+    </button>
+
+</div>
+
+<!-- Brand list table -->
 <div id="brand-table">
     {% include 'brands/partials/_brand_table.html' %}
 </div>
 
+<!-- Modal container -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50">
+    <div id="modal-content" class="bg-black-pearl text-slate-100 rounded p-6 w-[500px] border border-slate-600 shadow-lg">
+        <!-- Form content injection -->
+    </div>
+</div>
+    
 {% endblock %}
+
+{% block extrajs %}
+    <script src="{% static 'brands/js/brand-modal.js' %}"></script>
+{% endblock extrajs %}
