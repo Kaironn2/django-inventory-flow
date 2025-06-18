@@ -28,8 +28,8 @@
                         >
                             <i data-lucide="pencil" class="w-5 h-5"></i>
                         </button>
-                        <!-- delete button -->
                         
+                        <!-- delete button -->
                         <button 
                             hx-get="{% url 'brand-delete' brand.id %}"
                             hx-target="#modal-content"
@@ -53,3 +53,5 @@
 {% block extrajs %}
     <script src="{% static 'brands/js/table-row-navigation.js' %}"></script>
 {% endblock %}
+
+{% include 'core/partials/_pagination_controls.html' with page_obj=page_obj target_id_table="brand-table" %}

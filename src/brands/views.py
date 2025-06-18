@@ -15,6 +15,7 @@ class BrandListView(ListView):
     model = models.Brand
     template_name = 'brands/brand-list.html'
     context_object_name = 'brands'
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -72,6 +73,7 @@ class BrandUpdateView(UpdateView):
     context_object_name = 'brand'
 
     def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
         form = self.get_form()
         return render(
             request,
@@ -87,7 +89,7 @@ class BrandUpdateView(UpdateView):
         return render(self.request, 'brands/partials/_brand_table.html', context)
 
     def form_invalid(self, form):
-        if self.request.headers.get("HX-Request"):
+        if self.request.headers.get('HX-Request'):
             return render(
                 self.request,
                 self.template_name,
