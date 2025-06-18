@@ -1,0 +1,18 @@
+<table class="w-full text-left border-collapse">
+    <thead class="bg-slate-800 text-slate-200 border border-slate-700">
+        <tr>
+            <th class="px-4 py-2 border border-slate-700">ID</th>
+            <th class="px-4 py-2 border border-slate-700">Nome</th>
+            <th class="px-4 py-2 border border-slate-700">Descrição</th>
+        </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-700">
+        {% for brand in brands %}
+        <tr class="hover:bg-slate-700">
+            <td class="px-4 py-2 border border-slate-700">{{ brand.id }}</td>
+            <td class="px-4 py-2 border border-slate-700">{{ brand.name }}</td>
+            <td class="px-4 py-2 border border-slate-700">{{ brand.description|default:"Não há descrição" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

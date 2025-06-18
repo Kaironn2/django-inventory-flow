@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Marcas{% endblock %}
+
+
+{% block content %}
+    
+<input
+    type="text"
+    name="name"
+    placeholder="Buscar marca..."
+    class="mb-4 p-2 rounded bg-slate-800 text-slate-100 border border-slate-600 w-1/3"
+    hx-get="{% url 'brand-list' %}"
+    hx-target="#brand-table"
+    hx-trigger="keyup changed delay:200ms"
+/>
+
+<div id="brand-table">
+    {% include 'brands/partials/_brand_table.html' %}
+</div>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import admin
+from django.urls import include, path
 from django.views.generic import TemplateView
-from django.urls import path
 
 
 class HomeView(TemplateView):
@@ -10,4 +10,6 @@ class HomeView(TemplateView):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', HomeView.as_view(), name='home'),
+
+    path('brands/', include('brands.urls')),
 ]
