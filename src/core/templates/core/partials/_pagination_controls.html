@@ -1,15 +1,10 @@
-{# core/partials/_pagination_controls.html #}
-
-{# Este partial espera um objeto 'page_obj' no contexto, que é fornecido pelas Django ListViews paginadas #}
-
 {% if page_obj.has_other_pages %}
     <nav class="flex justify-center items-center gap-2 mt-4 text-slate-300" 
-         hx-target="this" hx-swap="outerHTML"> {# HTMX para atualizar APENAS os controles de pag #}
-        {# Botão Anterior #}
+         hx-target="this" hx-swap="outerHTML">
         {% if page_obj.has_previous %}
             <button
                 hx-get="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
-                hx-target="#{{ target_id_table }}" {# target_id_table virá do contexto #}
+                hx-target="#{{ target_id_table }}"
                 hx-swap="innerHTML"
                 class="px-3 py-1 rounded bg-slate-700 hover:bg-slate-600 border border-slate-600"
             >
@@ -19,14 +14,13 @@
             <span class="px-3 py-1 rounded bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700">Anterior</span>
         {% endif %}
 
-        {# Números das páginas #}
         {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
                 <span class="px-3 py-1 rounded bg-blue-600 text-white border border-blue-500 font-bold">{{ num }}</span>
             {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
                 <button
                     hx-get="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
-                    hx-target="#{{ target_id_table }}" {# target_id_table virá do contexto #}
+                    hx-target="#{{ target_id_table }}"
                     hx-swap="innerHTML"
                     class="px-3 py-1 rounded bg-slate-700 hover:bg-slate-600 border border-slate-600"
                 >
@@ -35,11 +29,10 @@
             {% endif %}
         {% endfor %}
 
-        {# Botão Próximo #}
         {% if page_obj.has_next %}
             <button
                 hx-get="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
-                hx-target="#{{ target_id_table }}" {# target_id_table virá do contexto #}
+                hx-target="#{{ target_id_table }}"
                 hx-swap="innerHTML"
                 class="px-3 py-1 rounded bg-slate-700 hover:bg-slate-600 border border-slate-600"
             >

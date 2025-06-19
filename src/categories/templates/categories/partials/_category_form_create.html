@@ -1,0 +1,33 @@
+<form 
+    method="post"
+    hx-post="{% url 'category-create' %}"
+    hx-target="#category-table"
+    hx-swap="innerHTML"
+>
+    {% csrf_token %}
+    <div class="space-y-4">
+        
+        <h3 class="text-xl font-bold leading-6 mb-4">Adicionar Nova Categoria</h3>
+
+        <!-- Inputs -->
+        <div>
+            <label for="{{ form.name.id_for_label }}" class="block mb-1 text-sm">Nome</label>
+            {{ form.name }}
+        </div>
+        <div>
+            <label for="{{ form.description.id_for_label }}" class="block mb-1 text-sm">Descrição</label>
+            {{ form.description }}
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-2 pt-4">
+            <button type="button" onclick="closeModal()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
+                Cancelar
+            </button>
+            <button type="submit" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded">
+                Salvar
+            </button>
+        </div>
+
+    </div>
+</form>

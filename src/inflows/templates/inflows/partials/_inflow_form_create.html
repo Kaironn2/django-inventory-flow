@@ -1,0 +1,56 @@
+<form 
+    method="post"
+    hx-post="{% url 'inflow-create' %}"
+    hx-target="#inflow-table"
+    hx-swap="innerHTML"
+>
+    {% csrf_token %}
+
+    <div class="space-y-4">
+        
+        <h3 class="text-xl font-bold leading-6 mb-4">Nova Entrada</h3>
+
+        <!-- supplier select -->
+        <div>
+            <label for="{{ form.supplier.id_for_label }}" class="block mb-1 text-sm">Fornecedor</label>
+            {{ form.supplier }}
+        </div>
+
+        <!-- product select -->
+        <div>
+            <label for="{{ form.product.id_for_label }}" class="block mb-1 text-sm">Produto</label>
+            {{ form.product }}
+        </div>
+
+        <!-- inflow quantity -->
+        <div>
+            <label for="{{ form.quantity.id_for_label }}" class="block mb-1 text-sm">Quantidade</label>
+            {{ form.quantity }}
+        </div>
+
+        <!-- inflow description -->
+        <div>
+            <label for="{{ form.description.id_for_label }}" class="block mb-1 text-sm">Descrição</label>
+            {{ form.description }} {# Renderiza o <textarea> #}
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="text-red-500 text-xs mt-2">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <!-- buttons -->
+        <div class="flex justify-end gap-2 pt-4">
+            <button type="button" onclick="closeModal()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
+                Cancelar
+            </button>
+            <button type="submit" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded">
+                Salvar
+            </button>
+        </div>
+
+    </div>
+</form>

@@ -1,0 +1,57 @@
+{% load static %}
+{% if categories %}
+    <table class="w-full text-left border-collapse table-fixed">
+        <thead class="bg-slate-800 text-slate-200 border border-slate-700">
+            <tr>
+                <th class="px-4 py-2 border border-slate-700 w-16">ID</th>
+                <th class="px-4 py-2 border border-slate-700 w-1/4">Nome</th>
+                <th class="px-4 py-2 border border-slate-700">Descrição</th>
+                <th class="px-4 py-2 border border-slate-700 w-32">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-700">
+            {% for category in categories %}
+            <tr class="hover:bg-slate-700 cursor-pointer" data-href="{% url 'category-detail' category.id %}">
+                <td class="px-4 py-2 border border-slate-700">{{ category.id }}</td>
+                <td class="px-4 py-2 border border-slate-700">{{ category.name }}</td>
+                <td class="px-4 py-2 border border-slate-700">{{ category.description|default:"Não há descrição" }}</td>
+                <td class="px-4 py-2 border border-slate-700">
+
+                    <div class="flex gap-2">
+                        <!-- update button -->
+                        <button 
+                            hx-get="{% url 'category-update' category.id %}"
+                            hx-target="#modal-content"
+                            hx-swap="innerHTML"
+                            onclick="event.stopPropagation(); openModal()"
+                            class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded"
+                        >
+                            <i data-lucide="pencil" class="w-5 h-5"></i>
+                        </button>
+                        
+                        <!-- delete button -->
+                        <button 
+                            hx-get="{% url 'category-delete' category.id %}"
+                            hx-target="#modal-content"
+                            hx-swap="innerHTML"
+                            onclick="event.stopPropagation(); openModal()"
+                            class="bg-red-600 hover:bg-red-700 text-white p-2 rounded"
+                        >
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="text-slate-400">Nenhuma categoria encontrada.</p>
+{% endif %}
+
+{% block extrajs %}
+    <script src="{% static 'core/js/table-row-navigation.js' %}"></script>
+{% endblock %}
+
+{% include 'core/partials/_pagination_controls.html' with page_obj=page_obj target_id_table="category-table" %}

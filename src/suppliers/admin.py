@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from . import models
+
+
+class SupplierAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(models.Supplier, SupplierAdmin)

@@ -11,6 +11,6 @@ class Supplier(models.Model):
         ordering = ['name']
         verbose_name = 'Fornecedor'
         verbose_name_plural = 'Fornecedores'
-    
+
     def __str__(self):
         return self.name
