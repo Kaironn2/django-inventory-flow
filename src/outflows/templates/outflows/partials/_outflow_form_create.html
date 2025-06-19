@@ -1,7 +1,7 @@
 <form 
     method="post"
-    hx-post="{% url 'inflow-create' %}"
-    hx-target="#inflow-table"
+    hx-post="{% url 'outflow-create' %}"
+    hx-target="#outflow-table"
     hx-swap="innerHTML"
 >
     {% csrf_token %}
@@ -9,29 +9,23 @@
     <div class="space-y-4">
         
         <h3 class="text-xl font-bold leading-6 mb-4">Nova Entrada</h3>
-
-        <!-- supplier select -->
-        <div>
-            <label for="{{ form.supplier.id_for_label }}" class="block mb-1 text-sm">Fornecedor</label>
-            {{ form.supplier }}
-        </div>
-
+    
         <!-- product select -->
         <div>
             <label for="{{ form.product.id_for_label }}" class="block mb-1 text-sm">Produto</label>
             {{ form.product }}
         </div>
 
-        <!-- inflow quantity -->
+        <!-- outflow quantity -->
         <div>
             <label for="{{ form.quantity.id_for_label }}" class="block mb-1 text-sm">Quantidade</label>
             {{ form.quantity }}
         </div>
 
-        <!-- inflow description -->
+        <!-- outflow description -->
         <div>
             <label for="{{ form.description.id_for_label }}" class="block mb-1 text-sm">Descrição</label>
-            {{ form.description }} {# Renderiza o <textarea> #}
+            {{ form.description }}
         </div>
 
         {% if form.non_field_errors %}

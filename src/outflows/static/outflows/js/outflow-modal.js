@@ -21,7 +21,7 @@ document.addEventListener('keydown', function (event) {
 
 document.body.addEventListener('htmx:afterRequest', function (e) {
     const targetId = e.detail.target.id;
-    if (targetId === "inflow-table") {
+    if (targetId === "outflow-table") {
         closeModal();
     }
 });

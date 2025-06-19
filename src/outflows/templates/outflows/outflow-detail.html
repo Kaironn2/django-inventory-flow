@@ -7,7 +7,7 @@
         
         <!-- Back Button -->
         <div>
-            <a href="{% url 'inflow-list' %}" 
+            <a href="{% url 'outflow-list' %}" 
             class="flex items-center gap-2 text-slate-100 hover:text-white">
                 <i data-lucide="arrow-left" class="w-5 h-5"></i>
                 <span>Voltar</span>
@@ -17,16 +17,16 @@
         <!-- Detail Card -->
         <div class="bg-slate-800 border border-slate-700 rounded p-6 text-slate-100 shadow-md">
 
-            <!-- inflow name -->
+            <!-- outflow name -->
             <h2 class="text-2xl font-bold mb-4">
-                {{ inflow.name }}
+                {{ outflow.name }}
             </h2>
 
-            <!-- inflow id -->
+            <!-- outflow id -->
             <div class="space-y-2">
                 <div>
                     <span class="text-slate-400 font-semibold">ID:</span>
-                    <span class="font-medium">{{ inflow.id }}</span>
+                    <span class="font-medium">{{ outflow.id }}</span>
                 </div>
             </div>
 
@@ -34,31 +34,23 @@
             <div class="space-y-2">
                 <div>
                     <span class="text-slate-400 font-semibold">Produto:</span>
-                    <span class="font-medium">{{ inflow.product.title }}</span>
+                    <span class="font-medium">{{ outflow.product.title }}</span>
                 </div>
             </div>
 
-            <!-- supplier name -->
-            <div class="space-y-2">
-                <div>
-                    <span class="text-slate-400 font-semibold">Fornecedor:</span>
-                    <span class="font-medium">{{ inflow.supplier.name }}</span>
-                </div>
-            </div>
-
-            <!-- inflow quantity -->
+            <!-- outflow quantity -->
             <div class="space-y-2">
                 <div>
                     <span class="text-slate-400 font-semibold">Quantidade:</span>
-                    <span class="font-medium">{{ inflow.quantity }}</span>
+                    <span class="font-medium">{{ outflow.quantity }}</span>
                 </div>
             </div>
 
-            <!-- inflow description -->
+            <!-- outflow description -->
             <div>
                 <span class="text-slate-400 font-semibold">Descrição:</span>
                 <span class="font-medium">
-                    {{ inflow.description|default:"Não há descrição cadastrada." }}
+                    {{ outflow.description|default:"Não há descrição cadastrada." }}
                 </span>
             </div>
 

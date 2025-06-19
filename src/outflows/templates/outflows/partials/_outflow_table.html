@@ -5,7 +5,6 @@
             <tr>
                 <th class="px-4 py-2 border border-slate-700">ID</th>
                 <th class="px-4 py-2 border border-slate-700">Produto</th>
-                <th class="px-4 py-2 border border-slate-700">Fornecedor</th>
                 <th class="px-4 py-2 border border-slate-700">Quantidade</th>
                 <th class="px-4 py-2 border border-slate-700">Descrição</th>
             </tr>
@@ -15,7 +14,6 @@
             <tr class="hover:bg-slate-700 cursor-pointer" data-href="{% url 'inflow-detail' inflow.id %}">
                 <td class="px-4 py-2 border border-slate-700">{{ inflow.id }}</td>
                 <td class="px-4 py-2 border border-slate-700">{{ inflow.product.title }}</td>
-                <td class="px-4 py-2 border border-slate-700">{{ inflow.supplier.name }}</td>
                 <td class="px-4 py-2 border border-slate-700">{{ inflow.quantity }}</td>
                 <td class="px-4 py-2 border border-slate-700">{{ inflow.description|default:"Não há descrição" }}</td>
             </tr>

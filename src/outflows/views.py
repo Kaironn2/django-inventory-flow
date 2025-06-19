@@ -10,7 +10,7 @@ from . import forms, models
 
 
 class OutflowListView(ListView):
-    model = models.Inflow
+    model = models.Outflow
     template_name = 'outflows/outflow-list.html'
     context_object_name = 'outflows'
     paginate_by = 10
@@ -26,13 +26,15 @@ class OutflowListView(ListView):
 
     def render_to_response(self, context, **response_kwargs):
         if self.request.headers.get('HX-Request'):
-            return render(self.request, 'outflows/partials/_inflow_table.html', context)
+            return render(
+                self.request, 'outflows/partials/_outflow_table.html', context
+            )
         return super().render_to_response(context, **response_kwargs)
 
 
 class OutflowCreateView(CreateView):
     model = models.Outflow
-    template_name = 'outflows/partials/_inflow_form_create.html'
+    template_name = 'outflows/partials/_outflow_form_create.html'
     form_class = forms.OutflowForm
     success_url = reverse_lazy('outflow-list')
 
@@ -42,16 +44,16 @@ class OutflowCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        outflows = models.Inflow.objects.all()
+        outflows = models.Outflow.objects.all()
         context = {'outflows': outflows}
 
-        return render(self.request, 'outflows/partials/_inflow_table.html', context)
+        return render(self.request, 'outflows/partials/_outflow_table.html', context)
 
     def form_invalid(self, form):
         if self.request.headers.get("HX-Request"):
             return render(
                 self.request,
-                'outflows/partials/_inflow_form_create.html',
+                'outflows/partials/_outflow_form_create.html',
                 {'form': form}
             )
         return super().form_invalid(form)

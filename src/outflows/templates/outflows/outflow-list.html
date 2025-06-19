@@ -1,12 +1,12 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}Entradas{% endblock %}
+{% block title %}Saídas{% endblock %}
 
 
 {% block content %}
 
-<h2 class="text-4xl font-semibold text-slate-200 mb-6 pt-5">Entradas</h2>
+<h2 class="text-4xl font-semibold text-slate-200 mb-6 pt-5">Saídas</h2>
 
 <div class="flex justify-between pt-3">
 
@@ -17,29 +17,29 @@
         product="product-name"
         placeholder="Buscar produto..."
         class="mb-4 p-2 rounded bg-slate-800 text-slate-100 border border-slate-600 w-1/3"
-        hx-get="{% url 'inflow-list' %}"
-        hx-target="#inflow-table"
+        hx-get="{% url 'outflow-list' %}"
+        hx-target="#outflow-table"
         hx-trigger="keyup changed delay:200ms"
     />
 
     <!-- Save button -->
     <button
-        id="save-inflow"
+        id="save-outflow"
         class="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 mb-4 rounded"
-        hx-get="{% url 'inflow-create' %}"
+        hx-get="{% url 'outflow-create' %}"
         hx-target="#modal-content"
         hx-swap="innerHTML"
         onclick="openModal()"
     >
         <i data-lucide="plus" class="w-5 h-5"></i>
-        Nova Entrada
+        Nova Saída
     </button>
 
 </div>
 
-<!-- inflow list table -->
-<div id="inflow-table">
-    {% include 'inflows/partials/_inflow_table.html' %}
+<!-- outflow list table -->
+<div id="outflow-table">
+    {% include 'outflows/partials/_outflow_table.html' %}
 </div>
 
 <!-- Modal container -->
@@ -52,5 +52,5 @@
 {% endblock %}
 
 {% block extrajs %}
-    <script src="{% static 'inflows/js/inflow-modal.js' %}"></script>
+    <script src="{% static 'outflows/js/outflow-modal.js' %}"></script>
 {% endblock extrajs %}

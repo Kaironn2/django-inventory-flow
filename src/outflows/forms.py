@@ -11,7 +11,7 @@ INPUT_CLASSES = (
 
 class OutflowForm(forms.ModelForm):
     class Meta:
-        model = models.Outlow
+        model = models.Outflow
         fields = ['product', 'quantity', 'description']
         widgets = {
             'product': forms.Select(attrs={
@@ -35,3 +35,5 @@ class OutflowForm(forms.ModelForm):
                 f'A quantidade disponível em estoque para o produto'
                 f'{product.title} é de {product.quantity}'
             )
+
+        return quantity
