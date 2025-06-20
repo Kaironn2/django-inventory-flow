@@ -1,6 +1,12 @@
 {% extends 'core/base.html' %}
 
 
+{% block title %}Inventory Flow - Home{% endblock %}
+    
+
 {% block content %}
-    <h3 class="text-4xl font-bold text-gray-800 dark:text-gray-200 tracking-wide">Bem-vindo ao Inventory Flow!</h3>
+    
+    {% include 'core/partials/_products_metrics.html' %}
+    {% include 'core/partials/_sales_metrics.html' %}
+
 {% endblock content %}
