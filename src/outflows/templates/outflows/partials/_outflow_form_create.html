@@ -27,14 +27,6 @@
             <label for="{{ form.description.id_for_label }}" class="block mb-1 text-sm">Descrição</label>
             {{ form.description }}
         </div>
-
-        {% if form.non_field_errors %}
-            <div class="text-red-500 text-xs mt-2">
-                {% for error in form.non_field_errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
         
         <!-- buttons -->
         <div class="flex justify-end gap-2 pt-4">
@@ -48,3 +40,6 @@
 
     </div>
 </form>
+<script>
+    openModal()
+</script>

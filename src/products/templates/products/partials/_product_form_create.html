@@ -1,0 +1,66 @@
+<form 
+    method="post"
+    hx-post="{% url 'product-create' %}"
+    hx-target="#product-table"
+    hx-swap="innerHTML"
+>
+    {% csrf_token %}
+
+    <div class="space-y-4">
+        
+        <h3 class="text-xl font-bold leading-6 mb-4">Novo Produto</h3>
+    
+        <!-- title -->
+        <div>
+            <label for="{{ form.title.id_for_label }}" class="block mb-1 text-sm">Produto</label>
+            {{ form.title }}
+        </div>
+
+        <!-- category -->
+        <div>
+            <label for="{{ form.category.id_for_label }}" class="block mb-1 text-sm">Categoria</label>
+            {{ form.category }}
+        </div>
+
+        <!-- brand -->
+        <div>
+            <label for="{{ form.brand.id_for_label }}" class="block mb-1 text-sm">Marca</label>
+            {{ form.brand }}
+        </div>
+
+        <!-- description -->
+        <div>
+            <label for="{{ form.description.id_for_label }}" class="block mb-1 text-sm">Descrição</label>
+            {{ form.description }}
+        </div>
+
+        <!-- serie number -->
+        <div>
+            <label for="{{ form.serie_number.id_for_label }}" class="block mb-1 text-sm">Número de Série</label>
+            {{ form.serie_number }}
+        </div>
+
+        <!-- cost_price -->
+        <div>
+            <label for="{{ form.cost_price.id_for_label }}" class="block mb-1 text-sm">Preço de Custo</label>
+            {{ form.cost_price }}
+        </div>
+        
+        <!-- selling price -->
+        <div>
+            <label for="{{ form.selling_price.id_for_label }}" class="block mb-1 text-sm">Preço de Venda</label>
+            {{ form.selling_price }}
+        </div>
+
+        <!-- buttons -->
+        <div class="flex justify-end gap-2 pt-4">
+            <button type="button" onclick="closeModal()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
+                Cancelar
+            </button>
+            <button type="submit" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded">
+                Salvar
+            </button>
+        </div>
+
+    </div>
+</form>

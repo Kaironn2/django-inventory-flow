@@ -1,5 +1,5 @@
 {% load static %}
-{% if inflows %}
+{% if outflows %}
     <table class="w-full text-left border-collapse">
         <thead class="bg-slate-800 text-slate-200 border border-slate-700">
             <tr>
@@ -10,12 +10,12 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-700">
-            {% for inflow in inflows %}
-            <tr class="hover:bg-slate-700 cursor-pointer" data-href="{% url 'inflow-detail' inflow.id %}">
-                <td class="px-4 py-2 border border-slate-700">{{ inflow.id }}</td>
-                <td class="px-4 py-2 border border-slate-700">{{ inflow.product.title }}</td>
-                <td class="px-4 py-2 border border-slate-700">{{ inflow.quantity }}</td>
-                <td class="px-4 py-2 border border-slate-700">{{ inflow.description|default:"Não há descrição" }}</td>
+            {% for outflow in outflows %}
+            <tr class="hover:bg-slate-700 cursor-pointer" data-href="{% url 'outflow-detail' outflow.id %}">
+                <td class="px-4 py-2 border border-slate-700">{{ outflow.id }}</td>
+                <td class="px-4 py-2 border border-slate-700">{{ outflow.product.title }}</td>
+                <td class="px-4 py-2 border border-slate-700">{{ outflow.quantity }}</td>
+                <td class="px-4 py-2 border border-slate-700">{{ outflow.description|default:"Não há descrição" }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -28,4 +28,4 @@
     <script src="{% static 'core/js/table-row-navigation.js' %}"></script>
 {% endblock %}
 
-{% include 'core/partials/_pagination_controls.html' with page_obj=page_obj target_id_table="inflow-table" %}
+{% include 'core/partials/_pagination_controls.html' with page_obj=page_obj target_id_table="outflow-table" %}
