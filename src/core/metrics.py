@@ -1,4 +1,5 @@
 from django.db.models import F, FloatField, Sum
+from django.utils import timezone
 
 from outflows.models import Outflow
 from products.models import Product
@@ -13,7 +14,7 @@ class Metrics:
                 F('cost_price') * F('quantity'), output_field=FloatField()
             ),
             total_selling_price=Sum(
-                F('cost_price') * F('quantity'), output_field=FloatField()
+                F('selling_price') * F('quantity'), output_field=FloatField()
             ),
             total_quantity=Sum('quantity'),
         )
@@ -37,8 +38,8 @@ class Metrics:
     def get_sales_metrics():
         aggregate = Outflow.objects.aggregate(
             total_products_sold=Sum('quantity'),
-            total_sales_value=Sum(F('quantity') * F('product.selling_price')),
-            total_sales_cost=Sum(F('quantity') * F('product.cost_price'))
+            total_sales_value=Sum(F('quantity') * F('product__selling_price')),
+            total_sales_cost=Sum(F('quantity') * F('product__cost_price')),
         )
 
         total_sales = Outflow.objects.count() or 0
@@ -53,4 +54,23 @@ class Metrics:
             total_products_sold=total_products_sold,
             total_sales_value=total_sales_value,
             total_sales_profit=total_sales_profit,
+        )
+
+    @staticmethod
+    def get_daily_sales_data():
+        today = timezone.now().date()
+        dates = [str(today - timezone.timedelta(days=i)) for i in range(6, -1, -1)]
+        values = []
+
+        for date in dates:
+            sales_total = Outflow.objects.filter(
+                created_at__date=date
+            ).aggregate(
+                total_sales=Sum(F('product__selling_price') * F('quantity'))
+            )['total_sales'] or 0
+            values.append(float(sales_total))
+
+        return dict(
+            dates=dates,
+            values=values,
         )

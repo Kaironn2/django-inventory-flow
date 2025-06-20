@@ -1,3 +1,5 @@
+import json
+
 from django.views.generic import TemplateView
 
 from .metrics import Metrics
@@ -10,4 +12,5 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['products_metrics'] = Metrics.get_products_metrics()
         context['sales_metrics'] = Metrics.get_sales_metrics()
+        context['daily_sales_data'] = Metrics.get_daily_sales_data()
         return context
