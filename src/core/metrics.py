@@ -84,7 +84,6 @@ class Metrics:
         values = [
             Outflow.objects.filter(created_at__date=date).count() for date in dates
         ]
-        print('PRINT ->', values)
 
         return dict(
             dates=dates,

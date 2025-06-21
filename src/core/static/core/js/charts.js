@@ -100,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }]
         },
         options: {
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     display: false,
@@ -120,11 +121,12 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
             labels: Object.keys(productByBrandData),
             datasets: [{
-                labels: Object.keys(productByBrandData),
+                data: Object.values(productByBrandData),
                 borderWidth: 1
             }]
         },
         options: {
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     display: false,
