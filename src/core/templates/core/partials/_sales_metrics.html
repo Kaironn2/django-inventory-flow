@@ -1,8 +1,8 @@
-<div class="rounded-xl shadow p-6">
+<div class="rounded-xl shadow">
   <div class="flex flex-wrap -mx-4">
     <!-- Card 1 -->
     <div class="w-full md:w-1/4 px-4 mb-4">
-      <div class="bg-gradient-to-r from-orange-500 to-orange-700 rounded-lg p-6">
+      <div class="bg-gradient-to-r from-slate-500 to-slate-700 rounded-lg p-6">
         <h5 class="text-white text-lg font-semibold">Quantidade de Vendas</h5>
         <p class="text-white text-4xl font-bold mt-2">{{ sales_metrics.total_sales }}</p>
       </div>
@@ -10,7 +10,7 @@
 
     <!-- Card 2 -->
     <div class="w-full md:w-1/4 px-4 mb-4">
-      <div class="bg-gradient-to-r from-rose-500 to-rose-700 rounded-lg p-6">
+      <div class="bg-gradient-to-r from-cyan-500 to-cyan-700 rounded-lg p-6">
         <h5 class="text-white text-lg font-semibold">Produtos Vendidos</h5>
         <p class="text-white text-4xl font-bold mt-2">{{ sales_metrics.total_products_sold }}</p>
       </div>
@@ -18,7 +18,7 @@
 
     <!-- Card 3 -->
     <div class="w-full md:w-1/4 px-4 mb-4">
-      <div class="bg-gradient-to-r from-indigo-500 to-indigo-700 rounded-lg p-6">
+      <div class="bg-gradient-to-r from-purple-500 to-purple-700 rounded-lg p-6">
         <h5 class="text-white text-lg font-semibold">Valor das Vendas</h5>
         <p class="text-white text-4xl font-bold mt-2">R$ {{ sales_metrics.total_sales_value|floatformat:2 }}</p>
       </div>
@@ -26,7 +26,7 @@
 
     <!-- Card 4 -->
     <div class="w-full md:w-1/4 px-4 mb-4">
-      <div class="bg-gradient-to-r from-emerald-500 to-emerald-700 rounded-lg p-6">
+      <div class="bg-gradient-to-r from-yellow-500 to-yellow-700 rounded-lg p-6">
         <h5 class="text-white text-lg font-semibold">Lucro das Vendas</h5>
         <p class="text-white text-4xl font-bold mt-2">R$ {{ sales_metrics.total_sales_profit|floatformat:2 }}</p>
       </div>

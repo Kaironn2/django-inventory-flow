@@ -25,14 +25,14 @@
 
         <!-- chart 3 -->
         <div class="bg-slate-800 rounded-xl p-6">
-            <h2 class="text-xl font-semibold mb-2">Item 3</h2>
-            <p>Conteúdo do item 3</p>
+            <h2 class="text-xl font-semibold mb-2">Produtos por Categoria</h2>
+            <canvas id="productByCategoryChart"></canvas>
         </div>
 
         <!-- chart 4 -->
         <div class="bg-slate-800 rounded-xl p-6">
-            <h2 class="text-xl font-semibold mb-2">Item 4</h2>
-            <p>Conteúdo do item 4</p>
+            <h2 class="text-xl font-semibold mb-2">Produtos por Marca</h2>
+            <canvas id="productByBrandChart"></canvas>
         </div>
     </div>
 
@@ -40,5 +40,11 @@
 
 
 {% block extrajs %}
+    <script>
+        const dailySalesData = JSON.parse('{{ daily_sales_data|safe|escapejs }}')
+        const dailySalesQuantityData = JSON.parse('{{ daily_sales_quantity_data|safe|escapejs }}')
+        const productByBrandData = JSON.parse('{{ product_by_brand_data|safe|escapejs }}')
+        const productByCategoryData = JSON.parse('{{ product_by_category_data|safe|escapejs }}')
+    </script>
     <script src="{% static 'core/js/charts.js' %}"></script>
 {% endblock %}

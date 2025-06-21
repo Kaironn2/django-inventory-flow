@@ -12,5 +12,14 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['products_metrics'] = Metrics.get_products_metrics()
         context['sales_metrics'] = Metrics.get_sales_metrics()
-        context['daily_sales_data'] = Metrics.get_daily_sales_data()
+        context['daily_sales_data'] = json.dumps(Metrics.get_daily_sales_data())
+        context['daily_sales_quantity_data'] = json.dumps(
+            Metrics.get_daily_sales_quantity_data()
+        )
+        context['product_by_brand_data'] = json.dumps(
+            Metrics.get_product_by_brand_data()
+        )
+        context['product_by_category_data'] = json.dumps(
+            Metrics.get_product_by_category_data()
+        )
         return context

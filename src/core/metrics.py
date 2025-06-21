@@ -1,6 +1,8 @@
-from django.db.models import F, FloatField, Sum
+from django.db.models import Count, F, FloatField, Sum
 from django.utils import timezone
 
+from brands.models import Brand
+from categories.models import Category
 from outflows.models import Outflow
 from products.models import Product
 
@@ -74,3 +76,35 @@ class Metrics:
             dates=dates,
             values=values,
         )
+
+    @staticmethod
+    def get_daily_sales_quantity_data():
+        today = timezone.now().date()
+        dates = [str(today - timezone.timedelta(days=i)) for i in range(6, -1, -1)]
+        values = [
+            Outflow.objects.filter(created_at__date=date).count() for date in dates
+        ]
+        print('PRINT ->', values)
+
+        return dict(
+            dates=dates,
+            values=values,
+        )
+
+    @staticmethod
+    def get_product_by_category_data():
+        category_product_count = (
+            Category.objects
+            .annotate(product_count=Count('products'))
+            .values_list('name', 'product_count')
+        )
+        return dict(category_product_count)
+
+    @staticmethod
+    def get_product_by_brand_data():
+        brand_product_count = (
+            Brand.objects
+            .annotate(product_count=Count('products'))
+            .values_list('name', 'product_count')
+        )
+        return dict(brand_product_count)
