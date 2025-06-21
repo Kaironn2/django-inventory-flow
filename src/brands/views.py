@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -11,11 +12,12 @@ from django.views.generic import (
 from . import forms, models
 
 
-class BrandListView(ListView):
+class BrandListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.Brand
     template_name = 'brands/brand-list.html'
     context_object_name = 'brands'
     paginate_by = 10
+    permission_required = 'brands.view_brand'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -32,11 +34,12 @@ class BrandListView(ListView):
         return super().render_to_response(context, **response_kwargs)
 
 
-class BrandCreateView(CreateView):
+class BrandCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = models.Brand
     template_name = 'brands/partials/_brand_form_create.html'
     form_class = forms.BrandForm
     success_url = reverse_lazy('brand-list')
+    permission_required = 'brands.add_brand'
 
     def get(self, request, *args, **kwargs):
         form = self.get_form()
@@ -59,18 +62,20 @@ class BrandCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class BrandDetailView(DetailView):
+class BrandDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = models.Brand
     template_name = 'brands/brand-detail.html'
     context_object_name = 'brand'
+    permission_required = 'brands.view_brand'
 
 
-class BrandUpdateView(UpdateView):
+class BrandUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = models.Brand
     template_name = 'brands/partials/_brand_form_update.html'
     form_class = forms.BrandForm
     success_url = reverse_lazy('brand-list')
     context_object_name = 'brand'
+    permission_required = 'brands.change_brand'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -98,11 +103,12 @@ class BrandUpdateView(UpdateView):
         return super().form_invalid(form)
 
 
-class BrandDeleteView(DeleteView):
+class BrandDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = models.Brand
     template_name = 'brands/partials/_brand_form_delete.html'
     success_url = reverse_lazy('brand-list')
     context_object_name = 'brand'
+    permission_required = 'brands.delete_brand'
 
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)

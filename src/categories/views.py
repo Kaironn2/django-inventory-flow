@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -11,11 +12,12 @@ from django.views.generic import (
 from . import forms, models
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.Category
     template_name = 'categories/category-list.html'
     context_object_name = 'categories'
     paginate_by = 10
+    permission_required = 'categories.view_category'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -36,11 +38,12 @@ class CategoryListView(ListView):
         return super().render_to_response(context, **response_kwargs)
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = models.Category
     template_name = 'categories/partials/_category_form_create.html'
     form_class = forms.CategoryForm
     success_url = reverse_lazy('category-list')
+    permission_required = 'categories.'
 
     def get(self, request, *args, **kwargs):
         form = self.get_form()
@@ -63,13 +66,14 @@ class CategoryCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = models.Category
     template_name = 'categories/category-detail.html'
     context_object_name = 'category'
+    permission_required = 'categories.view_category'
 
 
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = models.Category
     template_name = 'categories/partials/_category_form_update.html'
     form_class = forms.CategoryForm
@@ -102,7 +106,7 @@ class CategoryUpdateView(UpdateView):
         return super().form_invalid(form)
 
 
-class CategoryDeleteView(DeleteView):
+class CategoryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = models.Category
     template_name = 'categories/partials/_category_form_delete.html'
     success_url = reverse_lazy('category-list')

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -9,7 +10,7 @@ from django.views.generic import (
 from . import forms, models
 
 
-class OutflowListView(ListView):
+class OutflowListView(LoginRequiredMixin, ListView):
     model = models.Outflow
     template_name = 'outflows/outflow-list.html'
     context_object_name = 'outflows'
@@ -32,7 +33,7 @@ class OutflowListView(ListView):
         return super().render_to_response(context, **response_kwargs)
 
 
-class OutflowCreateView(CreateView):
+class OutflowCreateView(LoginRequiredMixin, CreateView):
     model = models.Outflow
     template_name = 'outflows/partials/_outflow_form_create.html'
     form_class = forms.OutflowForm
@@ -59,7 +60,7 @@ class OutflowCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class OutflowDetailView(DetailView):
+class OutflowDetailView(LoginRequiredMixin, DetailView):
     model = models.Outflow
     template_name = 'outflows/outflow-detail.html'
     context_object_name = 'outflow'

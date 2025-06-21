@@ -7,8 +7,8 @@
     <title>{% block title %}{% endblock %}</title>
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="{% static 'core/js/tailwind.config.js' %}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 </head>
@@ -18,14 +18,19 @@
     <div class="flex flex-col min-h-screen">
 
         <!-- Header -->
-         {% include 'core/partials/_header.html' %}
+        {% if user.is_authenticated %}
+            {% include 'core/partials/_header.html' %}      
+        {% endif %}
 
         <!-- Sidebar + Content + Footer -->
         <div class="flex flex-1">
 
             <!-- Sidebar -->
-            {% include 'core/partials/_sidebar.html' %}
-
+             
+             {% if user.is_authenticated %}
+                {% include 'core/partials/_sidebar.html' %}      
+             {% endif %}
+                
             <div class="flex flex-col flex-1">
 
                 <!-- Content -->

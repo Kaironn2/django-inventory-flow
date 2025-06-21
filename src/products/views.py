@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -11,7 +12,7 @@ from django.views.generic import (
 from . import forms, models
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = models.Product
     template_name = 'products/product-list.html'
     context_object_name = 'products'
@@ -52,7 +53,7 @@ class ProductListView(ListView):
         return super().render_to_response(context, **response_kwargs)
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = models.Product
     template_name = 'products/partials/_product_form_create.html'
     form_class = forms.ProductForm
@@ -79,13 +80,13 @@ class ProductCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = models.Product
     template_name = 'products/product-detail.html'
     context_object_name = 'product'
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Product
     template_name = 'products/partials/_product_form_update.html'
     form_class = forms.ProductForm
@@ -118,7 +119,7 @@ class ProductUpdateView(UpdateView):
         return super().form_invalid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Product
     template_name = 'products/partials/_product_form_delete.html'
     success_url = reverse_lazy('product-list')

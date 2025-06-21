@@ -16,7 +16,18 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+PROJECT_APPS = {
+    'brands': 'brand',
+    'categories': 'category',
+    'inflows': 'inflow',
+    'outflows': 'outflow',
+    'products': 'product',
+    'suppliers': 'supplier',
+}
 INSTALLED_APPS = [
+    'unfold',
+    'unfold.contrib.filters',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -24,12 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'brands',
-    'categories',
-    'inflows',
-    'outflows',
-    'products',
-    'suppliers',
+    *PROJECT_APPS.keys(),
 ]
 
 MIDDLEWARE = [
@@ -117,3 +123,22 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+
+
+def permissions_configs(
+    apps: dict[str, str],
+    actions: list[str] = ['view', 'add', 'change', 'delete']
+) -> dict[str, dict[str, str]]:
+    permissions = dict()
+    for app, model in apps.items():
+        permissions[app] = {
+            action: f'{app}.{action}_{model}'
+            for action in actions
+        }
+    return permissions
+
+APP_PERMISSIONS = permissions_configs(PROJECT_APPS)

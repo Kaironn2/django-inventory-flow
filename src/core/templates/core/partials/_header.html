@@ -1,15 +1,23 @@
+{% load static %}
 <header class="bg-midnight border-b border-slate-border">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <div class="text-2xl font-semibold">
-            Inventory Flow
+
+        <div>
+            <img src="{% static 'core/images/logo.png' %}" alt="Inventory Flow" class="h-12">
         </div>
-        <div class="flex items-center space-x-4">
-            <button class="hover:bg-slate-600 px-3 py-1 rounded">
-                Perfil
-            </button>
-            <button class="hover:bg-slate-600 px-3 py-1 rounded">
-                Sair
-            </button>
-        </div>
+
+        {% if user.is_authenticated %}
+            <div class="flex items-center space-x-4 gap-3">
+                <p class="px-3 py-1 text-lg font-thin">Olá, {{ user.username|capfirst }}!</p>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="hover:bg-slate-600 px-3 py-1 rounded text-lg font-thin flex items-center gap-2">
+                        <i data-lucide="log-out" class="w-5 h-5"></i>
+                        Sair
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
     </div>
 </header>

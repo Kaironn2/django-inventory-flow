@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -11,7 +12,7 @@ from django.views.generic import (
 from . import forms, models
 
 
-class SupplierListView(ListView):
+class SupplierListView(LoginRequiredMixin, ListView):
     model = models.Supplier
     template_name = 'suppliers/supplier-list.html'
     context_object_name = 'suppliers'
@@ -36,7 +37,7 @@ class SupplierListView(ListView):
         return super().render_to_response(context, **response_kwargs)
 
 
-class SupplierCreateView(CreateView):
+class SupplierCreateView(LoginRequiredMixin, CreateView):
     model = models.Supplier
     template_name = 'suppliers/partials/_supplier_form_create.html'
     form_class = forms.SupplierForm
@@ -63,13 +64,13 @@ class SupplierCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class SupplierDetailView(DetailView):
+class SupplierDetailView(LoginRequiredMixin, DetailView):
     model = models.Supplier
     template_name = 'suppliers/supplier-detail.html'
     context_object_name = 'supplier'
 
 
-class SupplierUpdateView(UpdateView):
+class SupplierUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Supplier
     template_name = 'suppliers/partials/_supplier_form_update.html'
     form_class = forms.SupplierForm
@@ -102,7 +103,7 @@ class SupplierUpdateView(UpdateView):
         return super().form_invalid(form)
 
 
-class SupplierDeleteView(DeleteView):
+class SupplierDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Supplier
     template_name = 'suppliers/partials/_supplier_form_delete.html'
     success_url = reverse_lazy('supplier-list')
