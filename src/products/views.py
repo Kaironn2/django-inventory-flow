@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -9,14 +9,17 @@ from django.views.generic import (
     UpdateView,
 )
 
+from core.permissions import default_permissions
+
 from . import forms, models
 
 
-class ProductListView(LoginRequiredMixin, ListView):
+class ProductListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.Product
     template_name = 'products/product-list.html'
     context_object_name = 'products'
     paginate_by = 10
+    permission_required = default_permissions['products']['view']
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -53,11 +56,12 @@ class ProductListView(LoginRequiredMixin, ListView):
         return super().render_to_response(context, **response_kwargs)
 
 
-class ProductCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = models.Product
     template_name = 'products/partials/_product_form_create.html'
     form_class = forms.ProductForm
     success_url = reverse_lazy('product-list')
+    permission_required = default_permissions['products']['add']
 
     def get(self, request, *args, **kwargs):
         form = self.get_form()
@@ -80,18 +84,20 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
-class ProductDetailView(LoginRequiredMixin, DetailView):
+class ProductDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = models.Product
     template_name = 'products/product-detail.html'
     context_object_name = 'product'
+    permission_required = default_permissions['products']['view']
 
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = models.Product
     template_name = 'products/partials/_product_form_update.html'
     form_class = forms.ProductForm
     success_url = reverse_lazy('product-list')
     context_object_name = 'product'
+    permission_required = default_permissions['products']['change']
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -119,11 +125,12 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_invalid(form)
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = models.Product
     template_name = 'products/partials/_product_form_delete.html'
     success_url = reverse_lazy('product-list')
     context_object_name = 'product'
+    permission_required = default_permissions['products']['delete']
 
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)

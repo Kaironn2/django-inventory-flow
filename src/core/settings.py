@@ -24,6 +24,7 @@ PROJECT_APPS = {
     'products': 'product',
     'suppliers': 'supplier',
 }
+
 INSTALLED_APPS = [
     'unfold',
     'unfold.contrib.filters',
@@ -127,18 +128,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
-
-
-def permissions_configs(
-    apps: dict[str, str],
-    actions: list[str] = ['view', 'add', 'change', 'delete']
-) -> dict[str, dict[str, str]]:
-    permissions = dict()
-    for app, model in apps.items():
-        permissions[app] = {
-            action: f'{app}.{action}_{model}'
-            for action in actions
-        }
-    return permissions
-
-APP_PERMISSIONS = permissions_configs(PROJECT_APPS)

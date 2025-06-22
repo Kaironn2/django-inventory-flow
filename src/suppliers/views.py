@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -9,14 +9,17 @@ from django.views.generic import (
     UpdateView,
 )
 
+from core.permissions import default_permissions
+
 from . import forms, models
 
 
-class SupplierListView(LoginRequiredMixin, ListView):
+class SupplierListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.Supplier
     template_name = 'suppliers/supplier-list.html'
     context_object_name = 'suppliers'
     paginate_by = 10
+    permission_required = default_permissions['suppliers']['view']
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -37,11 +40,12 @@ class SupplierListView(LoginRequiredMixin, ListView):
         return super().render_to_response(context, **response_kwargs)
 
 
-class SupplierCreateView(LoginRequiredMixin, CreateView):
+class SupplierCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = models.Supplier
     template_name = 'suppliers/partials/_supplier_form_create.html'
     form_class = forms.SupplierForm
     success_url = reverse_lazy('supplier-list')
+    permission_required = default_permissions['suppliers']['add']
 
     def get(self, request, *args, **kwargs):
         form = self.get_form()
@@ -64,18 +68,20 @@ class SupplierCreateView(LoginRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
-class SupplierDetailView(LoginRequiredMixin, DetailView):
+class SupplierDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = models.Supplier
     template_name = 'suppliers/supplier-detail.html'
     context_object_name = 'supplier'
+    permission_required = default_permissions['suppliers']['view']
 
 
-class SupplierUpdateView(LoginRequiredMixin, UpdateView):
+class SupplierUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = models.Supplier
     template_name = 'suppliers/partials/_supplier_form_update.html'
     form_class = forms.SupplierForm
     success_url = reverse_lazy('supplier-list')
     context_object_name = 'supplier'
+    permission_required = default_permissions['suppliers']['change']
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -103,11 +109,12 @@ class SupplierUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_invalid(form)
 
 
-class SupplierDeleteView(LoginRequiredMixin, DeleteView):
+class SupplierDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = models.Supplier
     template_name = 'suppliers/partials/_supplier_form_delete.html'
     success_url = reverse_lazy('supplier-list')
     context_object_name = 'supplier'
+    permission_required = default_permissions['suppliers']['delete']
 
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)

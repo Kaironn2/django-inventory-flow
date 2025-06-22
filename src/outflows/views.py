@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -7,14 +7,17 @@ from django.views.generic import (
     ListView,
 )
 
+from core.permissions import default_permissions
+
 from . import forms, models
 
 
-class OutflowListView(LoginRequiredMixin, ListView):
+class OutflowListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.Outflow
     template_name = 'outflows/outflow-list.html'
     context_object_name = 'outflows'
     paginate_by = 10
+    permission_required = default_permissions['outflows']['view']
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -33,11 +36,12 @@ class OutflowListView(LoginRequiredMixin, ListView):
         return super().render_to_response(context, **response_kwargs)
 
 
-class OutflowCreateView(LoginRequiredMixin, CreateView):
+class OutflowCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = models.Outflow
     template_name = 'outflows/partials/_outflow_form_create.html'
     form_class = forms.OutflowForm
     success_url = reverse_lazy('outflow-list')
+    permission_required = default_permissions['outflows']['add']
 
     def get(self, request, *args, **kwargs):
         form = self.get_form()
@@ -60,7 +64,8 @@ class OutflowCreateView(LoginRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
-class OutflowDetailView(LoginRequiredMixin, DetailView):
+class OutflowDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = models.Outflow
     template_name = 'outflows/outflow-detail.html'
     context_object_name = 'outflow'
+    permission_required = default_permissions['outflows']['view']

@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -7,14 +7,17 @@ from django.views.generic import (
     ListView,
 )
 
+from core.permissions import default_permissions
+
 from . import forms, models
 
 
-class InflowListView(LoginRequiredMixin, ListView):
+class InflowListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.Inflow
     template_name = 'inflows/inflow-list.html'
     context_object_name = 'inflows'
     paginate_by = 10
+    permission_required = default_permissions['inflows']['view']
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -36,6 +39,7 @@ class InflowCreateView(LoginRequiredMixin, CreateView):
     template_name = 'inflows/partials/_inflow_form_create.html'
     form_class = forms.InflowForm
     success_url = reverse_lazy('inflow-list')
+    permission_required = default_permissions['inflows']['add']
 
     def get(self, request, *args, **kwargs):
         form = self.get_form()
@@ -62,3 +66,4 @@ class InflowDetailView(LoginRequiredMixin, DetailView):
     model = models.Inflow
     template_name = 'inflows/inflow-detail.html'
     context_object_name = 'inflow'
+    permission_required = default_permissions['inflows']['view']

@@ -9,6 +9,8 @@ from django.views.generic import (
     UpdateView,
 )
 
+from core.permissions import default_permissions
+
 from . import forms, models
 
 
@@ -17,7 +19,7 @@ class CategoryListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'categories/category-list.html'
     context_object_name = 'categories'
     paginate_by = 10
-    permission_required = 'categories.view_category'
+    permission_required = default_permissions['categories']['view']
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -43,7 +45,7 @@ class CategoryCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView
     template_name = 'categories/partials/_category_form_create.html'
     form_class = forms.CategoryForm
     success_url = reverse_lazy('category-list')
-    permission_required = 'categories.'
+    permission_required = default_permissions['categories']['add']
 
     def get(self, request, *args, **kwargs):
         form = self.get_form()
@@ -70,7 +72,7 @@ class CategoryDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView
     model = models.Category
     template_name = 'categories/category-detail.html'
     context_object_name = 'category'
-    permission_required = 'categories.view_category'
+    permission_required = default_permissions['categories']['view']
 
 
 class CategoryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -79,6 +81,7 @@ class CategoryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView
     form_class = forms.CategoryForm
     success_url = reverse_lazy('category-list')
     context_object_name = 'category'
+    permission_required = default_permissions['categories']['change']
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -111,6 +114,7 @@ class CategoryDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView
     template_name = 'categories/partials/_category_form_delete.html'
     success_url = reverse_lazy('category-list')
     context_object_name = 'category'
+    permission_required = default_permissions['categories']['delete']
 
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
