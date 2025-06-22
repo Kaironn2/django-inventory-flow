@@ -8,10 +8,11 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
+from rest_framework import generics
 
 from core.permissions import default_permissions
 
-from . import forms, models
+from . import forms, models, serializers
 
 
 class BrandListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -125,3 +126,13 @@ class BrandDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         return render(request, self.template_name, self.get_context_data())
+
+
+class BrandCreateListView(generics.ListCreateAPIView):
+    queryset = models.Brand.objects.all()
+    serializer_class = serializers.BrandSerializer
+
+
+class BrandRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Brand.objects.all()
+    serializer_class = serializers.BrandSerializer

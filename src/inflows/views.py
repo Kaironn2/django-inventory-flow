@@ -6,10 +6,11 @@ from django.views.generic import (
     DetailView,
     ListView,
 )
+from rest_framework import generics
 
 from core.permissions import default_permissions
 
-from . import forms, models
+from . import forms, models, serializers
 
 
 class InflowListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -67,3 +68,13 @@ class InflowDetailView(LoginRequiredMixin, DetailView):
     template_name = 'inflows/inflow-detail.html'
     context_object_name = 'inflow'
     permission_required = default_permissions['inflows']['view']
+
+
+class InflowCreateListView(generics.ListCreateAPIView):
+    queryset = models.Inflow.objects.all()
+    serializer_class = serializers.InflowSerializer
+
+
+class InflowRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Inflow.objects.all()
+    serializer_class = serializers.InflowSerializer
