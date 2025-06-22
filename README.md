@@ -1,5 +1,9 @@
 # Inventory Flow
 
+<div>
+  <img src="https://www.dropbox.com/scl/fi/lsmrrbf2ykdkqb4ek5rdw/sge-dashboard.png?rlkey=gpqfigzo9sjhtlrcdcfef7f27&st=aq3ih31m&dl=1" alt="Teste">
+<div>
+
 ## English
 
 Inventory Flow is a comprehensive stock management system designed to streamline your inventory processes. Built with **Django** for the backend logic and database management, **HTMX** for dynamic partial rendering and enhanced responsiveness, and styled beautifully with **Tailwind CSS**, this application offers a modern and efficient way to control your stock.
