@@ -1,8 +1,6 @@
 # Inventory Flow
 
-<div>
-  <img src="https://www.dropbox.com/scl/fi/lsmrrbf2ykdkqb4ek5rdw/sge-dashboard.png?rlkey=gpqfigzo9sjhtlrcdcfef7f27&st=aq3ih31m&dl=1" alt="Teste">
-<div>
+![Inventory Flow Dashboard](assets/inventory-flow-dashboard.png)
 
 ## English
 
