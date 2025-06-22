@@ -22,17 +22,19 @@
     />
 
     <!-- Save button -->
-    <button
-        id="save-category"
-        class="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 mb-4 rounded"
-        hx-get="{% url 'category-create' %}"
-        hx-target="#modal-content"
-        hx-swap="innerHTML"
-        onclick="openModal()"
-    >
-        <i data-lucide="plus" class="w-5 h-5"></i>
-        Nova Categoria
-    </button>
+    {% if perms.categories.add_category %}
+        <button
+            id="save-category"
+            class="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 mb-4 rounded"
+            hx-get="{% url 'category-create' %}"
+            hx-target="#modal-content"
+            hx-swap="innerHTML"
+            onclick="openModal()"
+        >
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Nova Categoria
+        </button>
+    {% endif %}
 
 </div>
 

@@ -22,18 +22,20 @@
         hx-trigger="keyup changed delay:200ms"
     />
 
-    <!-- Save button -->
-    <button
-        id="save-outflow"
-        class="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 mb-4 rounded"
-        hx-get="{% url 'outflow-create' %}"
-        hx-target="#modal-content"
-        hx-swap="innerHTML"
-        onclick="openModal()"
-    >
-        <i data-lucide="plus" class="w-5 h-5"></i>
-        Nova Saída
-    </button>
+    {% if perms.outflows.add_outflow %}
+        <!-- Save button -->
+        <button
+            id="save-outflow"
+            class="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 mb-4 rounded"
+            hx-get="{% url 'outflow-create' %}"
+            hx-target="#modal-content"
+            hx-swap="innerHTML"
+            onclick="openModal()"
+        >
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Nova Saída
+        </button>
+    {% endif %}
 
 </div>
 

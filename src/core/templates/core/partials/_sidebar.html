@@ -1,32 +1,58 @@
 <aside class="w-64 bg-black-pearl border-r border-slate-border">
     <nav class="h-full p-4 space-y-2">
+
         <a href="{% url 'home' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
             <i data-lucide="gauge" class="w-5 h-5"></i>
             Dashboard
         </a>
-        <a href="{% url 'brand-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
-            <i data-lucide="badge" class="w-5 h-5"></i>
-            Marcas
-        </a>
-        <a href="{% url 'category-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
-            <i data-lucide="tags" class="w-5 h-5"></i>
-            Categorias
-        </a>
-        <a href="{% url 'supplier-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
-            <i data-lucide="truck" class="w-5 h-5"></i>
-            Fornecedores
-        </a>
-        <a href="{% url 'product-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
-            <i data-lucide="package" class="w-5 h-5"></i>
-            Produtos
-        </a>
-        <a href="{% url 'inflow-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
-            <i data-lucide="arrow-up-circle" class="w-5 h-5"></i>
-            Entradas
-        </a>
-        <a href="{% url 'outflow-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
-            <i data-lucide="arrow-down-circle" class="w-5 h-5"></i>
-            Saídas
-        </a>
+
+        <!-- BRANDS -->
+        {% if perms.brands.view_brand %}
+            <a href="{% url 'brand-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
+                <i data-lucide="badge" class="w-5 h-5"></i>
+                Marcas
+            </a>
+        {% endif %}
+        
+        <!-- CATEGORIES -->
+         {% if perms.categories.view_category %}
+            <a href="{% url 'category-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
+                <i data-lucide="tags" class="w-5 h-5"></i>
+                Categorias
+            </a>
+        {% endif %}
+
+        <!-- SUPPLIERS -->
+         {% if perms.suppliers.view_supplier %}
+            <a href="{% url 'supplier-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
+                <i data-lucide="truck" class="w-5 h-5"></i>
+                Fornecedores
+            </a>
+        {% endif %}
+
+        <!-- PRODUCTS -->
+         {% if perms.products.view_product %}
+            <a href="{% url 'product-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
+                <i data-lucide="package" class="w-5 h-5"></i>
+                Produtos
+            </a>
+        {% endif %}
+    
+        <!-- INFLOWS -->
+         {% if perms.inflows.view_inflow %}
+            <a href="{% url 'inflow-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
+                <i data-lucide="arrow-up-circle" class="w-5 h-5"></i>
+                Entradas
+            </a>
+        {% endif %}
+        
+        <!-- OUTFLOWS -->
+         {% if perms.outflows.view_outflow %}
+            <a href="{% url 'outflow-list' %}" class="flex items-center gap-2 px-3 py-2 rounded hover:bg-slate-border">
+                <i data-lucide="arrow-down-circle" class="w-5 h-5"></i>
+                Saídas
+            </a>
+        {% endif %}
+
     </nav>
 </aside>

@@ -20,19 +20,21 @@
         hx-target="#supplier-table"
         hx-trigger="keyup changed delay:200ms"
     />
-
+    
     <!-- Save button -->
-    <button
-        id="save-supplier"
-        class="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 mb-4 rounded"
-        hx-get="{% url 'supplier-create' %}"
-        hx-target="#modal-content"
-        hx-swap="innerHTML"
-        onclick="openModal()"
-    >
-        <i data-lucide="plus" class="w-5 h-5"></i>
-        Novo Fornecedor
-    </button>
+     {% if perms.suppliers.add_supplier %}
+        <button
+            id="save-supplier"
+            class="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-2 mb-4 rounded"
+            hx-get="{% url 'supplier-create' %}"
+            hx-target="#modal-content"
+            hx-swap="innerHTML"
+            onclick="openModal()"
+        >
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Novo Fornecedor
+        </button>
+    {% endif %}
 
 </div>
 

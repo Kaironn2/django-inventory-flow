@@ -1,15 +1,17 @@
 import json
 
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import TemplateView
 
+from core.permissions import default_permissions
+
 from .metrics import Metrics
 
 
-class HomeView(LoginRequiredMixin, TemplateView):
+class HomeView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     template_name = 'core/home.html'
+    permission_required = default_permissions['products']['view']
 
     def get_context_data(self, **kwargs):  # noqa: PLR6301
         context = super().get_context_data(**kwargs)

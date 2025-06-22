@@ -6,7 +6,9 @@
                 <th class="px-4 py-2 border border-slate-700 w-16">ID</th>
                 <th class="px-4 py-2 border border-slate-700 w-1/4">Nome</th>
                 <th class="px-4 py-2 border border-slate-700">Descrição</th>
-                <th class="px-4 py-2 border border-slate-700 w-32">Ações</th>
+                {% if perms.categories.change_category or perms.categories.delete_category %}
+                    <th class="px-4 py-2 border border-slate-700 w-32">Ações</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-700">
@@ -15,33 +17,41 @@
                 <td class="px-4 py-2 border border-slate-700">{{ category.id }}</td>
                 <td class="px-4 py-2 border border-slate-700">{{ category.name }}</td>
                 <td class="px-4 py-2 border border-slate-700">{{ category.description|default:"Não há descrição" }}</td>
-                <td class="px-4 py-2 border border-slate-700">
-
-                    <div class="flex gap-2">
-                        <!-- update button -->
-                        <button 
-                            hx-get="{% url 'category-update' category.id %}"
-                            hx-target="#modal-content"
-                            hx-swap="innerHTML"
-                            onclick="event.stopPropagation(); openModal()"
-                            class="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded"
-                        >
-                            <i data-lucide="pencil" class="w-5 h-5"></i>
-                        </button>
+                {% if perms.categories.change_category or perms.categories.delete_category %}
+                    <td class="px-4 py-2 border border-slate-700">
+                        <div class="flex gap-2">
+                            
+                            <!-- update button -->
+                            {% if perms.categories.change_category %}
+                                <button 
+                                    hx-get="{% url 'category-update' category.id %}"
+                                    hx-target="#modal-content"
+                                    hx-swap="innerHTML"
+                                    onclick="event.stopPropagation(); openModal()"
+                                    class="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded"
+                                >
+                                    <i data-lucide="pencil" class="w-5 h-5"></i>
+                                </button>
+                            {% endif %}
+                                
                         
-                        <!-- delete button -->
-                        <button 
-                            hx-get="{% url 'category-delete' category.id %}"
-                            hx-target="#modal-content"
-                            hx-swap="innerHTML"
-                            onclick="event.stopPropagation(); openModal()"
-                            class="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded"
-                        >
-                            <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>
-                    </div>
+                            <!-- delete button -->
+                            {% if perms.categories.delete_category %} 
+                                <button 
+                                    hx-get="{% url 'category-delete' category.id %}"
+                                    hx-target="#modal-content"
+                                    hx-swap="innerHTML"
+                                    onclick="event.stopPropagation(); openModal()"
+                                    class="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded"
+                                >
+                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                </button>
+                            {% endif %}
 
-                </td>
+                        </div>
+
+                    </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

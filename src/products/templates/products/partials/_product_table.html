@@ -9,8 +9,10 @@
                 <th class="px-4 py-2 border border-slate-700">Categoria</th>
                 <th class="px-4 py-2 border border-slate-700">Quantidade</th>
                 <th class="px-4 py-2 border border-slate-700">Número de Série</th>
-                <th class="px-4 py-2 border border-slate-700">Descrição</th>              
-                <th class="px-4 py-2 border border-slate-700 w-32">Ações</th>
+                <th class="px-4 py-2 border border-slate-700">Descrição</th>
+                {% if perms.products.change_product or perms.products.delete_product %}
+                    <th class="px-4 py-2 border border-slate-700 w-32">Ações</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-700">
@@ -23,33 +25,41 @@
                 <td class="px-4 py-2 border border-slate-700">{{ product.quantity }}</td>
                 <td class="px-4 py-2 border border-slate-700">{{ product.serie_number }}</td>
                 <td class="px-4 py-2 border border-slate-700">{{ product.description|default:"Não há descrição" }}</td>
-                <td class="px-4 py-2 border border-slate-700">
+                {% if perms.products.change_product or perms.products.delete_product %}
+                    <td class="px-4 py-2 border border-slate-700">
 
-                    <div class="flex gap-2">
-                        <!-- update button -->
-                        <button 
-                            hx-get="{% url 'product-update' product.id %}"
-                            hx-target="#modal-content"
-                            hx-swap="innerHTML"
-                            onclick="event.stopPropagation(); openModal()"
-                            class="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded"
-                        >
-                            <i data-lucide="pencil" class="w-5 h-5"></i>
-                        </button>
-                        
-                        <!-- delete button -->
-                        <button 
-                            hx-get="{% url 'product-delete' product.id %}"
-                            hx-target="#modal-content"
-                            hx-swap="innerHTML"
-                            onclick="event.stopPropagation(); openModal()"
-                            class="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded"
-                        >
-                            <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>
-                    </div>
+                        <div class="flex gap-2">
 
-                </td>
+                            {% if perms.products.change_product %}
+                                <!-- update button -->
+                                <button 
+                                    hx-get="{% url 'product-update' product.id %}"
+                                    hx-target="#modal-content"
+                                    hx-swap="innerHTML"
+                                    onclick="event.stopPropagation(); openModal()"
+                                    class="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded"
+                                >
+                                    <i data-lucide="pencil" class="w-5 h-5"></i>
+                                </button>
+                            {% endif %}
+                            
+                            {% if perms.products.delete_product %}
+                                <!-- delete button -->
+                                <button 
+                                    hx-get="{% url 'product-delete' product.id %}"
+                                    hx-target="#modal-content"
+                                    hx-swap="innerHTML"
+                                    onclick="event.stopPropagation(); openModal()"
+                                    class="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded"
+                                >
+                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                </button>
+                            {% endif %}
+
+                        </div>
+
+                    </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
