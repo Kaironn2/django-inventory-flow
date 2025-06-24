@@ -1,0 +1,24 @@
+services:
+  inventory_flow_db:
+    image: postgres:15
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+
+  inventory_flow_web:
+    build: .
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - inventory_flow_db
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:

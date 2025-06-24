@@ -74,12 +74,22 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+DB_TYPE = config('DB_TYPE', default='dev')
+DB_CONFIGS = {
+    'postgres': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DB_NAME', default='inventory_flow'),
+        'USER': config('DB_USER', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', default='postgres'),
+        'HOST': config('DB_HOST', default='inventory_flow_db'),
+        'PORT': config('DB_PORT', default='5432'),
+    },
+    'dev': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
+DATABASES = {'default': DB_CONFIGS.get(DB_TYPE)}
 
 
 # Password validation
