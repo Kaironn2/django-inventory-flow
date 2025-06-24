@@ -19,6 +19,4 @@ WORKDIR /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked
 
-RUN uv run src/manage.py migrate
-
 CMD ["uv", "run", "src/manage.py", "runserver", "0.0.0.0:8000"]

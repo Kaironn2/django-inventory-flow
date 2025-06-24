@@ -8,7 +8,6 @@ services:
       - .:/app
     depends_on:
       - inventory_flow_db
-      - migrate
     env_file:
       - .env
 
@@ -22,13 +21,6 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-  migrate:
-    build: .
-    command: uv run src/manage.py migrate
-    depends_on:
-      - inventory_flow_db
-    env_file:
-      - .env
 
 volumes:
   postgres_data:
