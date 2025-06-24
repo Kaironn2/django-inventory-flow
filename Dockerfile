@@ -1,13 +1,24 @@
-FROM python:3.13-slim
+FROM python:3.13.3-slim-bookworm
 
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y build-essential curl
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+COPY pyproject.toml uv.lock /_lock/
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    cd /_lock && \
+    uv sync --locked --no-install-project
+
+COPY . /app
 WORKDIR /app
 
-COPY . .
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --locked
 
-RUN pip install --upgrade pip
-RUN pip install build setuptools wheel
-RUN pip install .
+RUN uv run src/manage.py migrate
 
-EXPOSE 8000
-
-CMD python src/manage.py migrate && python src/manage.py runserver 0.0.0.0:8000
+CMD ["uv", "run", "src/manage.py", "runserver", "0.0.0.0:8000"]

@@ -1,22 +1,32 @@
 services:
-  inventory_flow_db:
-    image: postgres:15
+  inventory_flow_web:
+    build: .
+    command: uv run src/manage.py runserver 0.0.0.0:8000
     ports:
-      - 5432:5432
+      - "8000:8000"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - .:/app
+    depends_on:
+      - inventory_flow_db
+      - migrate
     env_file:
       - .env
 
-  inventory_flow_web:
-    build: .
-    restart: always
+  inventory_flow_db:
+    image: postgres:15
     ports:
-      - 8000:8000
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  migrate:
+    build: .
+    command: uv run src/manage.py migrate
     depends_on:
       - inventory_flow_db
-    volumes:
-      - .:/app
     env_file:
       - .env
 
